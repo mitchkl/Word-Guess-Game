@@ -9,17 +9,21 @@ console.log(word);
 
 let answerArray = [];
 
-
 for (let i = 0; i < word.length; i++) {
-    answerArray = (word.length * "_ ");
+    answerArray[i] = ("_ ");
     console.log(answerArray);
+    document.getElementById('answerArray').textContent = answerArray.join(' ');
 }
+
+let remaingLetters = word.length;
 
 document.addEventListener('keyup', event => {
     console.log('event.key', event.key);
 
     if (isInWord(event.key)) {
         console.log(event.key + ' is in word: ' + word);
+        //include or find
+
     } else {
         // list wrong guesses
         console.log(event.key + ' is NOT in word: ' + word);

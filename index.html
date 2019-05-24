@@ -8,8 +8,6 @@
     <title>Word Guess Game</title>
     <link rel="stylesheet" href="assets/css/reset.css">
     <link rel="stylesheet" href="assets/css/style.css">
-
-    <script src="assets/javascript/game.js"></script>
 </head>
 
 <body>
@@ -21,19 +19,21 @@
     <div class="container">
 
         <h2>Press any key to get started!</h2>
-        <div id="wins">
-            <p>Wins:</p>
-        </div>
+        <p>Wins:</p>
+        <div id="wins"></div>
         <br>
-        <div id="answerArray">
-            <p>Current Word:</p>
-        </div>
+        <p>Guess's Left:</p>
+        <div id="guessLeft"></div>
         <br>
-        <div id="guessedLetters">
-            <p>Guess Letters:</p>
-        </div>
+        <p>Current Word:</p>
+        <div id="answerArray"></div>
+        <br>
+        <p>Guess Letters:</p>
+        <div id="guessedLetters"></div>
 
     </div>
+
+    <script type="text/javascript" src="assets/javascript/game.js"></script>
 
 </body>
 
