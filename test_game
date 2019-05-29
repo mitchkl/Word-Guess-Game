@@ -1,0 +1,138 @@
+let wordList = ['tippet', 'leader', 'nymphs', 'backing', 'beadhead',
+    'streamers', 'mending', 'backcasting', 'caddis', 'damselfly', 'dropper',
+    'drag', 'hatch', 'hackle', 'hook', 'indicator', 'mayfly', 'trout', 'bass',
+    'presentation', 'riffle', 'run'
+];
+
+let wins = 0;
+let lettersGuessed = [];
+//let answerArray = [];
+let word = getWord();
+let totalGameGuesses = word.length*2;
+let remainingGuesses = totalGameGuesses - lettersGuessed.length;
+document.getElementById('guessLeft').textContent = remainingGuesses;
+
+//let word = wordList[Math.floor(Math.random() * wordList.length)];
+
+
+console.log('Chosen Word: '+word);
+
+
+function runGame() {
+  document.getElementById('gameTotalGuesses').textContent = totalGameGuesses;
+  document.getElementById('wins').textContent = wins;
+  //buildAnswerArray();
+  keyEvent();
+}
+runGame();
+
+function getWord() {
+  let wordPick = wordList[Math.floor(Math.random() * wordList.length)];
+  return wordPick;
+}
+
+function buildAnswerArray() {
+  let answerArray = [];
+  for (let i = 0; i < word.length; i++) {
+      answerArray[i] = ("_");
+      document.getElementById('answerArray').textContent = answerArray.join(' ');
+  }
+  return answerArray;
+}
+
+function keyEvent() {
+
+    document.onkeyup = function(e) {
+        let answerArray = buildAnswerArray();
+        let keyPressed = e.key;
+
+        /*
+        if (!checkCharacter(keyPressed) && !restartGame(keyPressed)){
+          alert("Must Enter Letter [A-Z]");
+        } else if (!checkCharacter(keyPressed) && restartGame(keyPressed)) {
+          alert("Restart");
+        }
+        */
+
+        if (restartGame(keyPressed)) {
+          clearArray(answerArray);
+          clearArray(lettersGuessed);
+          console.log(answerArray);
+          console.log(lettersGuessed);
+
+        } else if (!restartGame(keyPressed) && checkCharacter(keyPressed)){
+
+
+          lettersGuessed.push(keyPressed);
+
+          for (let i = 0; i < word.length; i++) {
+              if (lettersGuessed.includes(word[i])) {
+                  answerArray[i] = word[i];
+
+              } else if (!lettersGuessed.includes(word[i])) {
+                  //document.getElementById('guessedLetters').textContent = lettersGuessed.join(',');
+              }
+          }
+          document.getElementById('answerArray').textContent = answerArray.join(' ');
+          document.getElementById('guessedLetters').textContent = lettersGuessed.join(', ');
+          remainingGuesses = totalGameGuesses - lettersGuessed.length;
+          document.getElementById('guessLeft').textContent = remainingGuesses;
+
+
+          let checkWin = checkIfWin(answerArray);
+
+          if (checkWin <= totalGameGuesses && checkWin == word.length && remainingGuesses >= 0) {
+            alert("WINNER");
+            wins+=1;
+            //document.getElementById('guessedLetters').textContent = lettersGuessed.join(', ');
+
+          } else if (checkWin != word.length && remainingGuesses == 0) {
+            alert("LOSER! Word Was: "+word);
+          }
+          document.getElementById('wins').textContent = wins;
+
+        }
+        console.log(answerArray);
+        console.log(lettersGuessed);
+
+        /*
+        if (restartGame(keyPressed)){
+          clearArray(answerArray);
+          clearArray(lettersGuessed);
+        }
+        */
+
+    }
+}
+
+function checkIfWin(checkArray) {
+  let checkWin = 0;
+  for (x = 0; x < checkArray.length; x++) {
+    if (checkArray[x] != "_") {
+      checkWin++;
+    }
+  }
+  return checkWin;
+}
+
+function restartGame(key){
+  if (key == ";") {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function checkCharacter(inputText) {
+  let letters = /^[A-Za-z]+$/;
+  if (inputText.match(letters)) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function clearArray(list) {
+  list.length = 0;
+  return list;
+}
